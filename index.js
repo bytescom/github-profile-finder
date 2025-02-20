@@ -1,7 +1,8 @@
 const main_URL = "https://api.github.com/users/";
 const profileResult = document.querySelector(".profile-result");
-const searchInput = document.getElementById("search-input");
-const searchBtn = document.getElementById("search-btn");
+const searchInput = document.querySelector(".input__field");
+const searchBtn = document.querySelector(".search-btn");
+
 
 getUser("bytescom");
 
@@ -28,6 +29,10 @@ async function getRepos(username) {
     try {
         const resp = await fetch(main_URL + username + "/repos");
         const respData = await resp.json();
+
+        console.log(respData);
+        
+
         addReposToCard(respData);
     } catch (error) {
         console.error("Error fetching repositories:", error);
@@ -60,23 +65,25 @@ function createUserCard(user) {
     profileResult.innerHTML = cardHTML;
 }
 
+
 // Display repositories
 function addReposToCard(repos) {
     const reposEl = document.querySelector(".repos");
     reposEl.innerHTML = "";
 
     repos
-        .sort((a, b) => b.stargazers_count - a.stargazers_count)
-        .slice(0, 10) // Show only top 10 repos
+        .sort((a, b) => new Date(b.pushed_at) - new Date(a.pushed_at)) 
+        .slice(0, 10) 
         .forEach((repo) => {
             const repoEl = document.createElement("a");
             repoEl.classList.add("repo");
             repoEl.href = repo.html_url;
             repoEl.target = "_blank";
-            repoEl.innerText = repo.name;
+            repoEl.innerText = repo.name; 
             reposEl.appendChild(repoEl);
         });
 }
+
 
 // Search button click event
 searchBtn.addEventListener("click", () => {
@@ -92,6 +99,8 @@ searchBtn.addEventListener("click", () => {
 searchInput.addEventListener("keydown", (e) => {
     if (e.key === "Enter") {
         const user = searchInput.value.trim();
+        console.log(user);
+
         if (user) {
             getUser(user);
         } else {
