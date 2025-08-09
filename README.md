@@ -61,7 +61,7 @@ This project is licensed under the [MIT License](LICENSE) – see the LICENSE fi
 For questions or feedback:
 
 - GitHub: [@bytescom](https://github.com/bytescom)
-- Email: Kumarpankaj72863@gmail.com
+- Email: pankajk07414@gmail.com
 
 ---
 
